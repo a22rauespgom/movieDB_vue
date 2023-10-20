@@ -60,12 +60,10 @@
                 <div v-if="movie.length===0" v-for="(actual,index) in movies">
                     <div :id="index" v-show="peliActual===null||peliActual===index">
                         <div v-if="!showInfo" class="list-item">
-                            <!-- <a class="link-image" @click="movieSelected(actual.imdbID,index)"> -->
                             <a class="link-image">
-                                <img :src="actual.Poster">
+                                <img :src="actual.Poster" alt="poster">
                             </a>
                             <div class="info-container">
-                                <!-- <a @click="movieSelected(actual.imdbID,index)"> -->
                                 <a>
                                     <h2 class="movie-title">{{actual.Title}}</h2>
                                 </a>

@@ -106,6 +106,8 @@ createApp({
         },
         removeLocalStorage() {
             localStorage.removeItem('user');
+            user.name = '';
+            user.email = '';
         }
 
     },
