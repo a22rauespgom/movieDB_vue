@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Movie DB</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-if="pantalla==='inicio'">
+            <h1 v-if="user.name==''">Hola, soy la pantalla de inicio</h1>
+            <h1 v-else>Hola, {{user.name}}</h1>
+            <button @click="goToShop">Shop</button>
+        </div>
+        <div v-else-if="pantalla==='tienda'">
+            <div class="header">
+                <form @submit.prevent="handleSubmit">
+                    <div class="mb-3 input-container">
+                        <img class="input-icon" src="img/search.png" alt="">
+                        <input type="text" v-model="inputValue" class="form-control" id="movie-search"
+                            placeholder="Enter movie title" @keyup.enter="handleSubmit">
+                    </div>
+                </form>
+                <div class="shop-container">
+                    <a class="shopping-cart" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        <img src="img/shopping-cart.png" alt="">
+                        <div class="bubble">{{shoppingCartCount}}</div>
+                    </a>
+                </div>
+            </div>
+            <div v-if="boughtMovies.length!=0" class="collapse" id="collapseExample">
+                <div class="card card-body bought container-list-shop">
+                    <div v-for="(actual,index) in boughtMovies">
+                        <div class="list-item">
+                            <img :src="actual.Poster">
+                            <div class="info-container-shop">
+                                <button @click="decreaseCart(index)" class="decreaseMovie-cart">-</button>
+                                <button @click="removeAll(index)" class="deleteMovie-cart">Delete</button>
+                                <div class="bubble-count">x{{actual.count}}</div>
+                                <h2 class="movie-title">{{actual.Title}}</h2>
+                                <p class="movie-price">${{actual.Price}}</p>
+                                <p class="movie-year">{{actual.Year}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Total: ${{totalCartFormatted}}</p>
+                    <button @click="buy()">Buy</button>
+                </div>
+            </div>
+            <div class="container-list">
+                <div v-if="movie.length===0" v-for="(actual,index) in movies">
+                    <div :id="index" v-show="peliActual===null||peliActual===index">
+                        <div v-if="!showInfo" class="list-item">
+                            <!-- <a class="link-image" @click="movieSelected(actual.imdbID,index)"> -->
+                            <a class="link-image">
+                                <img :src="actual.Poster">
+                            </a>
+                            <div class="info-container">
+                                <!-- <a @click="movieSelected(actual.imdbID,index)"> -->
+                                <a>
+                                    <h2 class="movie-title">{{actual.Title}}</h2>
+                                </a>
+                                <p class="movie-year">{{actual.Year}}</p>
+                                <p class="movie-price">${{actual.Price}}</p>
+                                <div class="div-shop">
+                                    <button @click="substractCountMovie(index)">-</button>
+                                    <input :id="actual.imdbID" type="text" :placeholder="actual.count" disabled>
+                                    <button @click="addCountMovie(index)">+</button>
+                                    <button @click="addToCart(index)">Add to cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div v-else class="info-div">
+                            <img :src="movie.Poster">
+                            <h1>{{movie.Title}}</h1>
+                            <p>{{movie.Rated}} {{movie.Year}} {{movie.Genre}}</p>
+                            <p>{{movie.Plot}}</p>
+                            <p><b>Written by: </b>{{movie.Writer}}</p>
+                            <p><b>Directed by: </b>{{movie.Director}}</p>
+                            <p><b>Starring:</b></p>
+                            <p>{{movie.Actors}}</p>
+                        </div> -->
+                    </div>
+                </div>
+                <div if-else v-for="(actual,index) in movie">
+                    <div :id="index" v-show="peliActual===null||peliActual===index">
+                        <div v-if="!showInfo" class="list-item">
+                            <!-- <a class="link-image" @click="movieSelected(actual.imdbID,index)"> -->
+                            <a class="link-image">
+                                <img :src="actual.Poster">
+                            </a>
+                            <div class="info-container">
+                                <!-- <a @click="movieSelected(actual.imdbID,index)"> -->
+                                <a>
+                                    <h2 class="movie-title">{{actual.Title}}</h2>
+                                </a>
+                                <p class="movie-year">{{actual.Year}}</p>
+                                <p class="movie-price">${{actual.Price}}</p>
+                                <div class="div-shop">
+                                    <button @click="substractCountMovie(index)">-</button>
+                                    <input :id="actual.imdbID" type="text" :placeholder="actual.count" disabled>
+                                    <button @click="addCountMovie(index)">+</button>
+                                    <button @click="addToCart(index)">Add to cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div v-else-if="pantalla==='ticket'">
+            <form @submit.prevent="setLocalStorageUser">
+                <input type="text" v-model="user.name" placeholder="Escriu el teu nom..." required>
+                <input type="email" v-model="user.email" placeholder="email@email.com" required>
+                <button @click="setLocalStorageUser">Guardar</button>
+            </form>
+            <button @click="removeLocalStorage">No soc {{user.name}}</button>
+            <h1>El teu total es de ${{totalCart}}</h1>
+            <button @click="returnToList">Return</button>
+        </div>
+    </div>
+    <script src="js/function.js" type="module"></script>
+</body>
+
+</html>

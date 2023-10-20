@@ -1,0 +1,157 @@
+.header {
+    display: grid;
+    grid-template-areas: 'input shop';
+    grid-template-columns: 1fr .1fr;
+    position: sticky;
+    top: 0px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+
+}
+
+.shop-container {
+    position: relative;
+    margin: auto;
+    display: inline-block;
+    grid-area: shop;
+}
+
+.collapse {
+    position: sticky;
+    overflow: scroll;
+    height: 600px;
+    top: 7.1rem;
+    width: 35%;
+    margin-left: auto;
+}
+
+.header .shopping-cart img {
+    width: 50px;
+}
+
+.bought {
+    border: 1px lightgray solid;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .3);
+    width: 100%;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: 1rem;
+}
+
+.bought .list-item img {
+    width: 30%;
+    display: block;
+    position: relative;
+}
+
+.bubble {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: orange;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.info-container-shop {
+    display: grid;
+    grid-template-areas: 'title count'
+        'price count'
+        'year count';
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.input-container {
+    /* margin-top: 20px; */
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    padding-top: 30px;
+    grid-area: input;
+    z-index: 100;
+}
+
+.container-list {
+    padding-top: 30px;
+}
+
+#movie-search {
+    width: 100%;
+    padding: .5rem;
+    padding-left: 3rem;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-sizing: border-box;
+    /* padding-left: 0; */
+}
+
+.input-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-20%);
+    left: 16px;
+    width: 30px;
+}
+
+.list-item {
+    display: flex;
+    border: 1px lightgray solid;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .3);
+    border-radius: 10px;
+    margin: 1rem;
+    overflow: hidden;
+
+}
+
+.list-item .link-image {
+    display: inline-block;
+    width: 10%;
+}
+
+.list-item img {
+    /* height: auto; */
+    width: 100%;
+    display: block;
+}
+
+.list-item .info-container {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.list-item .movie-year {
+    color: gray;
+    grid-area: year;
+}
+
+.list-item .movie-title {
+    grid-area: title;
+}
+
+.list-item .info-container>.movie-price {
+    font-size: 1.2rem;
+}
+
+.movie-price {
+    grid-area: price;
+}
+
+.list-item .bubble-count {
+    grid-area: count;
+    margin: auto;
+    font-size: 2rem;
+}
+
+
+a:hover {
+    cursor: pointer;
+}
