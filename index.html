@@ -77,27 +77,16 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div v-else class="info-div">
-                            <img :src="movie.Poster">
-                            <h1>{{movie.Title}}</h1>
-                            <p>{{movie.Rated}} {{movie.Year}} {{movie.Genre}}</p>
-                            <p>{{movie.Plot}}</p>
-                            <p><b>Written by: </b>{{movie.Writer}}</p>
-                            <p><b>Directed by: </b>{{movie.Director}}</p>
-                            <p><b>Starring:</b></p>
-                            <p>{{movie.Actors}}</p>
-                        </div> -->
+
                     </div>
                 </div>
                 <div if-else v-for="(actual,index) in movie">
                     <div :id="index" v-show="peliActual===null||peliActual===index">
                         <div v-if="!showInfo" class="list-item">
-                            <!-- <a class="link-image" @click="movieSelected(actual.imdbID,index)"> -->
                             <a class="link-image">
                                 <img :src="actual.Poster">
                             </a>
                             <div class="info-container">
-                                <!-- <a @click="movieSelected(actual.imdbID,index)"> -->
                                 <a>
                                     <h2 class="movie-title">{{actual.Title}}</h2>
                                 </a>
