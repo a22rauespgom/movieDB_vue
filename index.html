@@ -22,13 +22,13 @@
         </div>
         <div v-else-if="pantalla==='tienda'">
             <div class="header">
-                <!-- <form @submit.prevent="handleSubmit">
+                <form @submit.prevent="handleSubmit">
                     <div class="mb-3 input-container">
                         <img class="input-icon" src="img/search.png" alt="">
                         <input type="text" v-model="inputValue" class="form-control" id="movie-search"
                             placeholder="Enter movie title" @keyup.enter="handleSubmit">
                     </div>
-                </form> -->
+                </form>
                 <div class="shop-container">
                     <a class="shopping-cart" data-bs-toggle="collapse" href="#collapseExample" role="button"
                         aria-expanded="false" aria-controls="collapseExample">
@@ -80,7 +80,7 @@
 
                     </div>
                 </div>
-                <!-- <div if-else v-for="(actual,index) in movie">
+                <div if-else v-for="(actual,index) in movie">
                     <div :id="index" v-show="peliActual===null||peliActual===index">
                         <div v-if="!showInfo" class="list-item">
                             <a class="link-image">
@@ -101,7 +101,7 @@
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
         <div v-else-if="pantalla==='ticket'">

@@ -49,33 +49,57 @@ createApp({
             this.totalCart = 0;
         },
         addCountMovie(id) {
-            this.movies[id].count++;
+            if (this.movie.length == 0) {
+                this.movies[id].count++;
+            } else {
+                this.movie[id].count++;
+            }
         },
         substractCountMovie(id) {
-            if (this.movies[id].count >= 1) {
-                this.movies[id].count--;
+            if (this.movie.length == 0) {
+                if (this.movies[id].count >= 1) {
+                    this.movies[id].count--;
+                }
+            } else {
+                if (this.movie[id].count >= 1) {
+                    this.movie[id].count--;
+                }
             }
         },
         addToCart(id) {
-            if (this.movies[id].count >= 1) {
-                let elementosRepetidos = this.repeatedMovie(id);
-                if (elementosRepetidos.length === 0) {
-                    this.boughtMovies = [...this.boughtMovies, { ...this.movies[id] }];
-
-                } else {
-                    let index = this.findIndexMovie(id);
-                    this.boughtMovies[index].count += this.movies[id].count;
+            if (this.movie.length == 0) {
+                if (this.movies[id].count >= 1) {
+                    let elementosRepetidos = this.repeatedMovie(id);
+                    if (elementosRepetidos.length === 0) {
+                        this.boughtMovies = [...this.boughtMovies, { ...this.movies[id] }];
+                    } else {
+                        let index = this.findByIndex(this.boughtMovies, id);
+                        this.boughtMovies[index].count += this.movies[id].count;
+                    }
+                    this.shoppingCartCount += this.movies[id].count;
+                    this.totalCart += ((this.movies[id].Price) * this.movies[id].count);
+                    this.movies[id].count = 0;
                 }
-                this.shoppingCartCount += this.movies[id].count;
-                this.totalCart += ((this.movies[id].Price) * this.movies[id].count);
-                this.movies[id].count = 0;
+            } else {
+                if (this.movie[id].count >= 1) {
+                    let elementosRepetidos = this.repeatedMovie(id);
+                    if (elementosRepetidos.length === 0) {
+                        this.boughtMovies = [...this.boughtMovies, { ...this.movie[id] }];
+                    } else {
+                        let index = this.findByIndex(this.boughtMovies, id);
+                        this.boughtMovies[index].count += this.movie[id].count;
+                    }
+                    this.shoppingCartCount += this.movie[id].count;
+                    this.totalCart += ((this.movie[id].Price) * this.movie[id].count);
+                    this.movie[id].count = 0;
+                }
             }
         },
         repeatedMovie(id) {
             return this.boughtMovies.filter(movie => movie.imdbID === this.movies[id].imdbID);
         },
-        findIndexMovie(id) {
-            return this.boughtMovies.findIndex(movie => movie.imdbID === this.movies[id].imdbID);
+        findByIndex(movArray, id) {
+            return movArray.findIndex(movie => movie.imdbID === this.movies[id].imdbID);
         },
         goToShop() {
             this.pantalla = "tienda";
@@ -85,7 +109,7 @@ createApp({
             if (this.boughtMovies[id].count != 1) {
                 this.boughtMovies[id].count--;
             } else {
-                this.boughtMovies.splice(this.findIndexMovie(id), 1);
+                this.boughtMovies.splice(this.findByIndex(this.boughtMovies, id), 1);
             }
             this.shoppingCartCount--;
         },
